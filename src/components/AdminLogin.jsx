@@ -25,7 +25,7 @@ const AdminLogin = () => {
         if (response.data.status === 'success') {
           alert('Admin Login Successful!');
           localStorage.setItem('adminToken', response.data.token); // Save token in localStorage
-          navigate('/AdminDashboard'); // Redirect to the admin dashboard
+          navigate('/AdminDash'); // Redirect to the admin dashboard
         } else {
           alert('Error: ' + response.data.message);
         }
