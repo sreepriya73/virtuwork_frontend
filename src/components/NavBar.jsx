@@ -44,7 +44,27 @@ const NavBar = () => {
               SIGN IN
               </Link>
             </li>
-           
+
+            
+            
+            <li className="nav-item">
+              <Link className="nav-link" to="/AdminRegister">
+              ADMIN REGISTER
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link className="nav-link" to="/ViewTasks">
+              VIEW TASKS
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link className="nav-link" to="/AcceptedTasks">
+              ACCEPTED TASKS
+              </Link>
+            </li>
+
           </ul>
           {/* Logout button */}
           <button

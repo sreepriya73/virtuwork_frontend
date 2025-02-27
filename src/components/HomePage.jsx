@@ -54,17 +54,24 @@ const HomePage = () => {
         if (response.data.status === 'success') {
           sessionStorage.setItem('token', response.data.token);
           sessionStorage.setItem('userId', response.data.userId);
-          navigate('/ProfilePage');
-        } else {
-          setLoginError('Incorrect email or password. Please try again.');
-        }
-      })
-      .catch((error) => {
-        console.error('Error during login:', error);
-        alert('An error occurred during login.');
-      });
-  };
-
+          sessionStorage.setItem('userName', response.data.username);
+          alert('Login successful!');
+          
+       // Navigate based on user role
+       if (response.data.role && response.data.role.toLowerCase() === 'client') {
+        navigate('/ClientDash');
+      } else {
+        navigate('/FreelancerDash');
+      }
+    } else {
+      alert('Error: ' + response.data.message);
+    }
+  })
+  .catch((error) => {
+    console.error('Error during sign-in:', error);
+    alert('Sign-in failed, please try again!');
+  });
+};
   return (
     <div>
      <NavBar/>
@@ -104,7 +111,7 @@ const HomePage = () => {
             {loginError && <small className="text-danger">{loginError}</small>}
             <button className="btn btn-success" onClick={readValue}>LOGIN</button>
             <div className="additional-links">
-              <a href="/register">New User?</a> | <a href="/AdminLogin">Admin login</a>
+              <a href="/UserRegister">New User?</a> | <a href="/AdminLogin">Admin login</a>
             </div>
           </div>
         </div>
