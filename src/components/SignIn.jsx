@@ -1,49 +1,48 @@
-import axios from 'axios';
-import React, { useState } from 'react';
-import NavBar from './NavBar';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import React, { useState } from "react";
+import NavBar from "./NavBar";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const [signinData, setSigninData] = useState({
-    emailid: '',
-    password: '',
+    emailid: "",
+    password: "",
   });
 
   const navigate = useNavigate();
 
-  // Handle input changes
   const inputHandler = (event) => {
     setSigninData({ ...signinData, [event.target.name]: event.target.value });
   };
 
-  // Handle form submission (sign-in request)
   const handleSignIn = () => {
     const { emailid, password } = signinData;
     const userCredentials = { emailid, password };
 
     axios
-      .post('http://localhost:3030/signin', userCredentials)
+      .post("http://localhost:3030/signin", userCredentials)
       .then((response) => {
         console.log(response.data);
-        if (response.data.status === 'success') {
-          localStorage.setItem('token', response.data.token);
-          sessionStorage.setItem('userId', response.data.userId);
-          sessionStorage.setItem('userName', response.data.username);
-          alert('Login successful!');
-          
-          // Navigate based on user role
-          if (response.data.role && response.data.role.toLowerCase() === 'client') {
-            navigate('/ClientDash');
+        if (response.data.status === "success") {
+          sessionStorage.setItem("token", response.data.token);
+          sessionStorage.setItem("userId", response.data.userId);
+          sessionStorage.setItem("userName", response.data.username);
+          alert("Login successful!");
+
+          if (response.data.role === "client") {
+            navigate("/ClientDash");
+          } else if (response.data.role === "freelancer") {
+            navigate("/FreelancerDash");
           } else {
-            navigate('/FreelancerDash');
+            alert("Invalid role detected.");
           }
         } else {
-          alert('Error: ' + response.data.message);
+          alert("Error: " + response.data.message);
         }
       })
       .catch((error) => {
-        console.error('Error during sign-in:', error);
-        alert('Sign-in failed, please try again!');
+        console.error("Error during sign-in:", error);
+        alert("Sign-in failed, please try again!");
       });
   };
 
@@ -56,7 +55,9 @@ const SignIn = () => {
           <div className="col-12">
             <div className="row g-3">
               <div className="col-12">
-                <label htmlFor="emailid" className="form-label">Email</label>
+                <label htmlFor="emailid" className="form-label">
+                  Email
+                </label>
                 <input
                   type="text"
                   className="form-control"
@@ -66,7 +67,9 @@ const SignIn = () => {
                 />
               </div>
               <div className="col-12">
-                <label htmlFor="password" className="form-label">Password</label>
+                <label htmlFor="password" className="form-label">
+                  Password
+                </label>
                 <input
                   type="password"
                   className="form-control"

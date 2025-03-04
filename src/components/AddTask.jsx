@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 const AddTask = () => {
   const [task, setTask] = useState({
-    description: '',
-    category: '',
-    deadline: '',
-    budget: '',
+    description: "",
+    category: "",
+    deadline: "",
+    budget: "",
   });
 
   const inputHandler = (e) => {
@@ -17,12 +17,31 @@ const AddTask = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3030/tasks/add', task);
+      const token = sessionStorage.getItem("token");
+      if (!token) {
+        alert("Please log in to add a task.");
+        return;
+      }
+
+      const response = await axios.post(
+        "http://localhost:3030/tasks/add",
+        task,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       alert(response.data.message);
-      setTask({ description: '', category: '', deadline: '', budget: '' });
+      setTask({
+        description: "",
+        category: "",
+        deadline: "",
+        budget: "",
+      });
     } catch (error) {
-      console.error(error);
-      alert('Failed to add task');
+      console.error("Error submitting task:", error);
+      alert("Failed to add task");
     }
   };
 

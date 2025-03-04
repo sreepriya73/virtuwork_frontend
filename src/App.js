@@ -14,6 +14,14 @@ import AdminRegister from './components/AdminRegister';
 import AddTask from './components/AddTask';
 import AdminDash from './components/AdminDash';
 import ViewTasks from './components/ViewTasks';
+import ViewAcceptedTasks from './components/ViewAcceptedTasks';
+import ConfirmTask from './components/ConfirmTask';
+import FreelancerConfirmedTasks from './components/FreelancerConfirmedTasks';
+import CurrentWork from './components/CurrentWork';
+import SubmitWork from './components/SubmitWork';
+import ViewSubmittedWorks from './components/ViewSubmittedWorks';
+import TaskProgress from './components/TaskProgress';
+import TaskRecommender from './components/TaskRecommender';
 
 
 
@@ -32,6 +40,14 @@ function App() {
   <Route path='/AddTask' element={<AddTask/>}/>
   <Route path='/AdminDash' element={<AdminDash/>}/>
   <Route path='/ViewTasks' element={<ViewTasks/>}/>
+  <Route path='/ViewAcceptedTasks' element={<ViewAcceptedTasks/>}/>
+  <Route path='/ConfirmTask' element={<ConfirmTask/>}/>
+  <Route path='/FreelancerCinfirmedTask' element={<FreelancerConfirmedTasks/>}/>
+  <Route path='/CurrentWork' element={<CurrentWork/>}/>
+  <Route path='/SubmitWork' element={<SubmitWork/>}/>
+  <Route path='/ViewSubmittedWorks' element={<ViewSubmittedWorks/>}/>
+  <Route path='/TaskProgress' element={<TaskProgress/>}/>
+  <Route path='/TaskRecommender' element={<TaskRecommender/>}/>
   
   
 
