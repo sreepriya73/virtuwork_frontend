@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import NavBar from "./NavBar";
 
-const FreelancerDashboard = () => {
+const FreelancerDash = () => {
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -38,12 +38,9 @@ const FreelancerDashboard = () => {
     <div>
       <NavBar />
       <div className="container mt-5">
-        {/* Welcome message */}
         <h2 className="text-center mb-4">
           Welcome, {userData.username || "User"} ({userData.role || "Freelancer"})!
         </h2>
-
-        {/* Profile Information */}
         <div className="row justify-content-center">
           <div className="col-md-6">
             <div className="card p-4 shadow-lg rounded">
@@ -75,8 +72,6 @@ const FreelancerDashboard = () => {
             </div>
           </div>
         </div>
-
-        {/* Task Options */}
         <div className="row mt-5">
           <div className="col-md-6">
             <div
@@ -92,9 +87,17 @@ const FreelancerDashboard = () => {
               <p className="text-muted">Manage and view all your assigned tasks easily.</p>
               <button
                 className="btn btn-primary"
-                onClick={() => navigate("/tasks")}
+                onClick={() => navigate("/ConfirmTask")}
               >
                 View Tasks
+              </button>
+              <h5>Current Work</h5>
+              <p className="text-muted">Manage and view your current tasks easily.</p>
+              <button
+                className="btn btn-primary"
+                onClick={() => navigate("/CurrentWork")}
+              >
+                Current Work
               </button>
             </div>
           </div>
@@ -108,22 +111,19 @@ const FreelancerDashboard = () => {
               onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
               onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
             >
- <h5>Customize Task</h5>
-              <p className="text-muted">
-                Create and customize tasks based on specific requirements.
-              </p>
+              <h5>Customize Task</h5>
+              <p className="text-muted">Create and customize tasks based on specific requirements.</p>
               <button
-                className="btn btn-secondary"
-                onClick={() => navigate("/customize-task")} // Navigate to the Customize Task page
+                className="btn btn-primary"
+                onClick={() => navigate("/TaskRecommender")}
               >
                 Customize Task
               </button>
-
               <h5>Submit Work</h5>
               <p className="text-muted">Upload and submit your completed work efficiently.</p>
               <button
-                className="btn btn-secondary"
-                onClick={() => navigate("/submit-work")}
+                className="btn btn-primary"
+                onClick={() => navigate("/SubmitWork")}
               >
                 Submit Work
               </button>
@@ -135,4 +135,4 @@ const FreelancerDashboard = () => {
   );
 };
 
-export default FreelancerDashboard;
+export default FreelancerDash;

@@ -3,17 +3,17 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import NavBar from "./NavBar";
 
-const ProfilePage = () => {
+const ClientDash = () => {
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userId = sessionStorage.getItem("userId"); // Fetch user ID from session storage
+        const userId = sessionStorage.getItem("userId");
         if (!userId) {
-          window.location.href = "/SignIn"; // Redirect to login if userId is missing
+          window.location.href = "/SignIn";
           return;
         }
         const response = await axios.get(`http://localhost:3030/users/${userId}`);
@@ -37,12 +37,9 @@ const ProfilePage = () => {
     <div>
       <NavBar />
       <div className="container mt-5">
-        {/* Welcome message */}
         <h2 className="text-center mb-4">
           Welcome, {userData.username || "User"} ({userData.role || "N/A"})!
         </h2>
-
-        {/* Profile Information */}
         <div className="row justify-content-center">
           <div className="col-md-6">
             <div className="card p-4 shadow-lg rounded">
@@ -63,9 +60,9 @@ const ProfilePage = () => {
                 <button
                   className="btn btn-danger"
                   onClick={() => {
-                    sessionStorage.clear(); // Clear session and logout
+                    sessionStorage.clear();
                     alert("Logged out successfully!");
-                    window.location.href = "/HomePage"; // Redirect to login page
+                    window.location.href = "/";
                   }}
                 >
                   Logout
@@ -74,8 +71,6 @@ const ProfilePage = () => {
             </div>
           </div>
         </div>
-
-        {/* Task Options */}
         <div className="row mt-5">
           <div className="col-md-6">
             <div
@@ -93,17 +88,40 @@ const ProfilePage = () => {
               </p>
               <button
                 className="btn btn-primary"
-                onClick={() => navigate("/AddTask")} // Navigate to the Assign Task page
+                onClick={() => navigate("/AddTask")}
               >
                 Assign Task
               </button>
             </div>
           </div>
-          
+        </div>
+        <div className="row mt-5">
+          <div className="col-md-6">
+            <div
+              className="card p-4 shadow-lg rounded text-center"
+              style={{
+                backgroundColor: "#f9f9f9",
+                transition: "transform 0.3s ease",
+              }}
+              onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+              onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+            >
+              <h5>Completed Task</h5>
+              <p className="text-muted">
+                Get the assigned task completed
+              </p>
+              <button
+                className="btn btn-primary"
+                onClick={() => navigate("/AddTask")} // Update this later if needed
+              >
+                Completed Task
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default ProfilePage;
+export default ClientDash;

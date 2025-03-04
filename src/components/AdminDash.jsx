@@ -13,12 +13,12 @@ const AdminDash = () => {
     {
       title: "Acceped Tasks",
       description: "Approve pending tasks",
-      action: () => navigate("/accept-tasks"), // Navigate to Accept Tasks page
+      action: () => navigate("/ViewAcceptedTasks"), // Navigate to Accept Tasks page
     },
     {
       title: "Manage Users",
       description: "View and manage user accounts",
-      action: () => navigate("/manage-users"), // Navigate to Manage Users page
+      action: () => navigate("/FreelancerCinfirmedTask"), // Navigate to Manage Users page
     },
     {
       title: "Generate Reports",

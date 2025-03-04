@@ -60,7 +60,7 @@ const NavBar = () => {
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link" to="/AcceptedTasks">
+              <Link className="nav-link" to="/ViewAcceptedTasks">
               ACCEPTED TASKS
               </Link>
             </li>
