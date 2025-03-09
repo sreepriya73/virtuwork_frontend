@@ -22,19 +22,20 @@ const SignIn = () => {
     axios
       .post("http://localhost:3030/signin", userCredentials)
       .then((response) => {
-        console.log(response.data);
+        console.log("Sign-in response:", response.data); // Debug response
         if (response.data.status === "success") {
           sessionStorage.setItem("token", response.data.token);
           sessionStorage.setItem("userId", response.data.userId);
           sessionStorage.setItem("userName", response.data.username);
           alert("Login successful!");
 
-          if (response.data.role === "client") {
+          const role = response.data.role ? response.data.role.toLowerCase() : null;
+          if (role === "client") {
             navigate("/ClientDash");
-          } else if (response.data.role === "freelancer") {
+          } else if (role === "freelancer") {
             navigate("/FreelancerDash");
           } else {
-            alert("Invalid role detected.");
+            alert("Invalid role detected: " + (response.data.role || "No role provided"));
           }
         } else {
           alert("Error: " + response.data.message);

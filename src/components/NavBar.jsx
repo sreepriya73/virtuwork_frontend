@@ -39,12 +39,7 @@ const NavBar = () => {
                 SIGN UP
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/SignIn">
-              SIGN IN
-              </Link>
-            </li>
-
+            
             
             
             <li className="nav-item">
@@ -53,17 +48,7 @@ const NavBar = () => {
               </Link>
             </li>
 
-            <li className="nav-item">
-              <Link className="nav-link" to="/ViewTasks">
-              VIEW TASKS
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link className="nav-link" to="/ViewAcceptedTasks">
-              ACCEPTED TASKS
-              </Link>
-            </li>
+           
 
           </ul>
           {/* Logout button */}

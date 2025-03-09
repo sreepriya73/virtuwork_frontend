@@ -22,6 +22,13 @@ import SubmitWork from './components/SubmitWork';
 import ViewSubmittedWorks from './components/ViewSubmittedWorks';
 import TaskProgress from './components/TaskProgress';
 import TaskRecommender from './components/TaskRecommender';
+import ConfirmedTasks from './components/ConfirmedTasks';
+import PaymentPage from './components/PaymentPage';
+import FreelancerWork from './components/FreelancerWork';
+
+import AdminAllPayments from './components/AdminAllPayments';
+import RedeemPoints from './components/RedeemPoints';
+import ViewRedeemedPoints from './components/ViewRedeemedPoints';
 
 
 
@@ -48,6 +55,12 @@ function App() {
   <Route path='/ViewSubmittedWorks' element={<ViewSubmittedWorks/>}/>
   <Route path='/TaskProgress' element={<TaskProgress/>}/>
   <Route path='/TaskRecommender' element={<TaskRecommender/>}/>
+  <Route path='/ConfirmedTasks' element={<  ConfirmedTasks/>}/>
+  <Route path='/payment/:taskId' element={<  PaymentPage/>}/>
+  <Route path='/freelancer-work/:taskId' element={<  FreelancerWork/>}/>
+  <Route path='/AdminAllPayments' element={<  AdminAllPayments/>}/>
+  <Route path='/redeem-points' element={<  RedeemPoints/>}/>
+  <Route path='/view-redeemed-points' element={<  ViewRedeemedPoints/>}/>
   
   
 
