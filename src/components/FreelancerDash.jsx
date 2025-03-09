@@ -30,9 +30,7 @@ const FreelancerDash = () => {
     fetchUserData();
   }, []);
 
-  if (loading) {
-    return <div className="text-center mt-5">Loading...</div>;
-  }
+  if (loading) return <div className="text-center mt-5">Loading...</div>;
 
   return (
     <div>
@@ -57,6 +55,17 @@ const FreelancerDash = () => {
                 <h6>Phone Number:</h6>
                 <p>{userData.phone || "N/A"}</p>
               </div>
+              <div>
+                <h6>Reward Points:</h6>
+                <p>{userData.rewardPoints || 0} points (10 points = $1)</p>
+                <button
+                  className="btn btn-success mt-2"
+                  onClick={() => navigate("/redeem-points")}
+                  disabled={(userData.rewardPoints || 0) <= 0}
+                >
+                  Redeem Points
+                </button>
+              </div>
               <div className="text-center mt-4">
                 <button
                   className="btn btn-danger"
@@ -76,55 +85,27 @@ const FreelancerDash = () => {
           <div className="col-md-6">
             <div
               className="card p-4 shadow-lg rounded text-center"
-              style={{
-                backgroundColor: "#f9f9f9",
-                transition: "transform 0.3s ease",
-              }}
+              style={{ backgroundColor: "#f9f9f9", transition: "transform 0.3s ease" }}
               onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
               onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
             >
-              <h5>View Tasks</h5>
+              <h5>Confirm Tasks</h5>
               <p className="text-muted">Manage and view all your assigned tasks easily.</p>
-              <button
-                className="btn btn-primary"
-                onClick={() => navigate("/ConfirmTask")}
-              >
-                View Tasks
-              </button>
-              <h5>Current Work</h5>
-              <p className="text-muted">Manage and view your current tasks easily.</p>
-              <button
-                className="btn btn-primary"
-                onClick={() => navigate("/CurrentWork")}
-              >
-                Current Work
+              <button className="btn btn-primary" onClick={() => navigate("/ConfirmTask")}>
+                Confirm Task
               </button>
             </div>
           </div>
           <div className="col-md-6">
             <div
               className="card p-4 shadow-lg rounded text-center"
-              style={{
-                backgroundColor: "#f9f9f9",
-                transition: "transform 0.3s ease",
-              }}
+              style={{ backgroundColor: "#f9f9f9", transition: "transform 0.3s ease" }}
               onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
               onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
             >
-              <h5>Customize Task</h5>
-              <p className="text-muted">Create and customize tasks based on specific requirements.</p>
-              <button
-                className="btn btn-primary"
-                onClick={() => navigate("/TaskRecommender")}
-              >
-                Customize Task
-              </button>
               <h5>Submit Work</h5>
               <p className="text-muted">Upload and submit your completed work efficiently.</p>
-              <button
-                className="btn btn-primary"
-                onClick={() => navigate("/SubmitWork")}
-              >
+              <button className="btn btn-primary" onClick={() => navigate("/SubmitWork")}>
                 Submit Work
               </button>
             </div>

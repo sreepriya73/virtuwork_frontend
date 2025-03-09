@@ -16,14 +16,19 @@ const AdminDash = () => {
       action: () => navigate("/ViewAcceptedTasks"), // Navigate to Accept Tasks page
     },
     {
-      title: "Manage Users",
+      title: "View Payments",
+      description: "View and manage payments",
+      action: () => navigate("/AdminAllPayments"), // Navigate to Manage Users page
+    },
+    {
+      title: "Freelancer Confirmed Task Details",
       description: "View and manage user accounts",
       action: () => navigate("/FreelancerCinfirmedTask"), // Navigate to Manage Users page
     },
     {
-      title: "Generate Reports",
+      title: "Reward Point Redemption Details",
       description: "Generate activity reports",
-      action: () => navigate("/generate-reports"), // Navigate to Generate Reports page
+      action: () => navigate("/view-redeemed-points"), // Navigate to Generate Reports page
     },
     {
       title: "Settings",

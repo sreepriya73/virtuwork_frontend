@@ -112,9 +112,33 @@ const ClientDash = () => {
               </p>
               <button
                 className="btn btn-primary"
-                onClick={() => navigate("/AddTask")} // Update this later if needed
+                onClick={() => navigate("/ViewSubmittedWorks")} // Update this later if needed
               >
                 Completed Task
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="row mt-5">
+          <div className="col-md-6">
+            <div
+              className="card p-4 shadow-lg rounded text-center"
+              style={{
+                backgroundColor: "#f9f9f9",
+                transition: "transform 0.3s ease",
+              }}
+              onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+              onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+            >
+              <h5>Confirmed Tasks</h5>
+              <p className="text-muted">
+                View freelancer-confirmed tasks and make half payments
+              </p>
+              <button
+                className="btn btn-primary"
+                onClick={() => navigate("/ConfirmedTasks")}
+              >
+                Confirmed Tasks
               </button>
             </div>
           </div>

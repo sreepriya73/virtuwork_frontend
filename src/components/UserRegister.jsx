@@ -221,7 +221,7 @@ const UserRegister = () => {
                 <option value="">Select Role</option>
                 <option value="Client">client</option>
                 <option value="Freelancer">freelancer</option>
-                <option value="Admin">Admin</option>
+                
               </select>
               {errors.role && <small className="text-danger">{errors.role}</small>}
             </div>

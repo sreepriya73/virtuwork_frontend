@@ -2,27 +2,25 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import NavBar from "./NavBar";
 
-const ViewSubmittedWorks = () => {
+const AdminAllPayments = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchSubmittedTasks = async () => {
+    const fetchAllTasks = async () => {
       try {
         const response = await axios.get("http://localhost:3030/tasks/all");
-        // Filter tasks with submissions
-        const submittedTasks = response.data.filter(task => task.submission);
-        setTasks(submittedTasks);
-        setLoading(false);
+        setTasks(response.data);
       } catch (err) {
-        setError(err.response?.data?.message || "Failed to fetch submitted tasks");
+        setError(err.response?.data?.message || "Failed to fetch payment history");
         console.error("Error fetching tasks:", err);
+      } finally {
         setLoading(false);
       }
     };
 
-    fetchSubmittedTasks();
+    fetchAllTasks();
   }, []);
 
   if (loading) {
@@ -42,45 +40,35 @@ const ViewSubmittedWorks = () => {
     <div>
       <NavBar />
       <div className="container mt-5">
-        <h2 className="text-center mb-4">Submitted Tasks Overview</h2>
+        <h2 className="text-center mb-4">All Client Payments Overview</h2>
         {tasks.length === 0 ? (
-          <p className="text-center">No submitted tasks found.</p>
+          <p className="text-center">No payment records found.</p>
         ) : (
           <div className="table-responsive">
             <table className="table table-striped table-bordered">
               <thead className="thead-dark">
                 <tr>
                   <th>Task ID</th>
-                  <th>Description</th>
-                  <th>Category</th>
-                  <th>Deadline</th>
                   <th>Client Name</th>
                   <th>Freelancer</th>
-                  <th>Total Budget</th>
+                  <th>Description</th>
+                  <th>Budget</th>
                   <th>Payment Status</th>
                   <th>Half Paid At</th>
                   <th>Fully Paid At</th>
-                  <th>Submission Link</th>
                 </tr>
               </thead>
               <tbody>
                 {tasks.map((task) => (
                   <tr key={task._id}>
                     <td>{task._id}</td>
-                    <td>{task.description}</td>
-                    <td>{task.category}</td>
-                    <td>{new Date(task.deadline).toLocaleDateString()}</td>
                     <td>{task.ClientId?.username || "N/A"}</td>
                     <td>{task.freelancerId?.username || "N/A"}</td>
+                    <td>{task.description}</td>
                     <td>${task.budget}</td>
                     <td>{task.paymentStatus || "pending"}</td>
                     <td>{task.halfPaidAt ? new Date(task.halfPaidAt).toLocaleString() : "N/A"}</td>
                     <td>{task.fullyPaidAt ? new Date(task.fullyPaidAt).toLocaleString() : "N/A"}</td>
-                    <td>
-                      <a href={task.submission} target="_blank" rel="noopener noreferrer">
-                        View Submission
-                      </a>
-                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -92,4 +80,4 @@ const ViewSubmittedWorks = () => {
   );
 };
 
-export default ViewSubmittedWorks;
+export default AdminAllPayments;
