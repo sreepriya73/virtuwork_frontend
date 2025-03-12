@@ -29,6 +29,21 @@ import FreelancerWork from './components/FreelancerWork';
 import AdminAllPayments from './components/AdminAllPayments';
 import RedeemPoints from './components/RedeemPoints';
 import ViewRedeemedPoints from './components/ViewRedeemedPoints';
+import AdminPlatformCharges from './components/AdminPlatformCharges';
+import ViewUsers from './components/ViewUsers';
+import ManageUsers from './components/ManageUsers';
+import DailySales from './components/DailySales';
+import AccountSettings from './components/AccountSettings';
+import FreelancerWorkHistory from './components/FreelancerWorkHistory';
+import UserRedeemedPoints from './components/UserRedeemedPoints';
+import ClientTaskProgress from './components/ClientTaskProgress';
+import ClientTaskList from './components/ClientTaskList';
+import AboutUs from './components/AboutUs';
+import HowToUse from './components/HowToUse';
+import RateFreelancer from './components/RateFreelancer';
+import FreelancerPoints from './components/FreelancerPoints';
+import FreelancerProfile from './components/FreelancerProfile';
+import SubmitWorkRating from './components/SubmitWorkRating';
 
 
 
@@ -49,7 +64,7 @@ function App() {
   <Route path='/ViewTasks' element={<ViewTasks/>}/>
   <Route path='/ViewAcceptedTasks' element={<ViewAcceptedTasks/>}/>
   <Route path='/ConfirmTask' element={<ConfirmTask/>}/>
-  <Route path='/FreelancerCinfirmedTask' element={<FreelancerConfirmedTasks/>}/>
+  <Route path='/FreelancerConfirmedTask' element={<FreelancerConfirmedTasks/>}/>
   <Route path='/CurrentWork' element={<CurrentWork/>}/>
   <Route path='/SubmitWork' element={<SubmitWork/>}/>
   <Route path='/ViewSubmittedWorks' element={<ViewSubmittedWorks/>}/>
@@ -61,7 +76,22 @@ function App() {
   <Route path='/AdminAllPayments' element={<  AdminAllPayments/>}/>
   <Route path='/redeem-points' element={<  RedeemPoints/>}/>
   <Route path='/view-redeemed-points' element={<  ViewRedeemedPoints/>}/>
+  <Route path='/admin-platform-charges' element={<  AdminPlatformCharges/>}/>
+  <Route path='/view-users' element={<  ViewUsers/>}/>
+  <Route path='/manage-users' element={<  ManageUsers/>}/>
+  <Route path='/daily-sales' element={<  DailySales/>}/>
+  <Route path='/account-settings' element={<  AccountSettings/>}/>
+  <Route path='/freelancer-work-history' element={<  FreelancerWorkHistory/>}/>
+  <Route path='/user-redeemed-points' element={<  UserRedeemedPoints/>}/>
+  <Route path='/client-task-progress/:taskId' element={<  ClientTaskProgress/>}/>
+  <Route path='/client-task-list' element={<  ClientTaskList/>}/>
+  <Route path='/AboutUs' element={<  AboutUs/>}/>
   
+  <Route path='/HowToUse' element={<  HowToUse/>}/>
+  <Route path='/rate-freelancer/:taskId' element={<  RateFreelancer/>}/>
+  <Route path='/freelancer-points' element={<  FreelancerPoints/>}/>
+  <Route path='/freelancers/:freelancerId/profile' element={<  FreelancerProfile/>}/>
+  <Route path='SubmitWorkRating' element={<  SubmitWorkRating/>}/>
   
 
  

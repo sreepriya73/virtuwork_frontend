@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import NavBar from './NavBar';
 
 const AdminRegister = () => {
   const [registerData, setRegisterData] = useState({
@@ -37,6 +38,9 @@ const AdminRegister = () => {
   };
 
   return (
+    <div>
+      <NavBar/>
+  
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
       <div className="row w-50">
         <h1 className="text-center mb-4">Admin Registration</h1>
@@ -80,6 +84,7 @@ const AdminRegister = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

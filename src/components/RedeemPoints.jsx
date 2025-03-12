@@ -23,10 +23,11 @@ const RedeemPoints = () => {
         const response = await axios.get(`http://localhost:3030/users/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        console.log("Fetched Points:", response.data.rewardPoints);
         setPoints(response.data.rewardPoints || 0);
-        setLoading(false);
       } catch (err) {
         setError(err.response?.data?.message || "Failed to fetch points");
+      } finally {
         setLoading(false);
       }
     };
@@ -36,12 +37,24 @@ const RedeemPoints = () => {
 
   const handleRedeem = async (e) => {
     e.preventDefault();
-    if (!pointsToRedeem || pointsToRedeem <= 0) {
+
+    const pointsNum = parseInt(pointsToRedeem, 10);
+    if (isNaN(pointsNum) || pointsNum <= 0) {
       setError("Please enter a valid number of points.");
       return;
     }
-    if (pointsToRedeem > points) {
+    if (pointsNum > points) {
       setError("Insufficient points to redeem.");
+      return;
+    }
+    if (pointsNum % 10 !== 0) {
+      setError("Points must be redeemed in multiples of 10 (e.g., 10, 20, 30).");
+      return;
+    }
+
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      navigate("/SignIn");
       return;
     }
 
@@ -49,16 +62,16 @@ const RedeemPoints = () => {
     setError("");
 
     try {
-      const token = sessionStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:3030/users/redeem-points",
-        { pointsToRedeem: parseInt(pointsToRedeem) },
+        { pointsToRedeem: pointsNum },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
       alert(response.data.message);
       setPoints(response.data.remainingPoints);
       setPointsToRedeem("");
+      navigate("/FreelancerDash", { state: { refreshDash: true } });
     } catch (err) {
       setError(err.response?.data?.message || "Failed to redeem points");
     } finally {
@@ -66,7 +79,14 @@ const RedeemPoints = () => {
     }
   };
 
-  if (loading) return <div className="text-center mt-5">Loading...</div>;
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="spinner"></div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -76,40 +96,53 @@ const RedeemPoints = () => {
         {error && <div className="alert alert-danger">{error}</div>}
         <div className="card p-4 shadow-lg mx-auto" style={{ maxWidth: "600px" }}>
           <h4 className="text-center">Your Points</h4>
-          <p className="text-center"><strong>Total Points:</strong> {points} (10 points = $1)</p>
-          <p className="text-center"><strong>Cash Value:</strong> ${(points / 10).toFixed(2)}</p>
+          <p className="text-center">
+            <strong>Total Points:</strong> {points} (10 points = $1)
+          </p>
+          <p className="text-center">
+            <strong>Cash Value:</strong> ${(points / 10).toFixed(2)}
+          </p>
 
           <form onSubmit={handleRedeem}>
             <div className="mb-3">
-              <label htmlFor="pointsToRedeem" className="form-label">Points to Redeem</label>
+              <label htmlFor="pointsToRedeem" className="form-label">
+                Points to Redeem (multiples of 10)
+              </label>
               <input
                 type="number"
                 className="form-control"
                 id="pointsToRedeem"
                 value={pointsToRedeem}
-                onChange={(e) => setPointsToRedeem(e.target.value)}
-                placeholder="Enter points (e.g., 20)"
-                min="1"
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value === "" || /^\d*$/.test(value)) {
+                    setPointsToRedeem(value);
+                  }
+                }}
+                placeholder="e.g., 20"
+                min="10"
                 max={points}
+                step="10"
                 required
               />
             </div>
             <button
               type="submit"
               className="btn btn-primary w-100"
-              disabled={loading || points <= 0}
+              disabled={loading || points < 10}
             >
               {loading ? "Redeeming..." : "Redeem Points"}
             </button>
           </form>
           <button
             className="btn btn-secondary w-100 mt-3"
-            onClick={() => navigate("/FreelancerDash")}
+            onClick={() => navigate("/FreelancerDash", { state: { refreshDash: true } })}
           >
             Back to Dashboard
           </button>
         </div>
       </div>
+      {/* CSS unchanged */}
     </div>
   );
 };

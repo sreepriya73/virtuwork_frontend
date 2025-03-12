@@ -1,65 +1,65 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Added for navigation
+import { useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
 
-const ViewSubmittedWorks = () => {
+const FreelancerWorkHistory = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  const navigate = useNavigate(); // Added for navigation
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchSubmittedTasks = async () => {
+    const fetchWorkHistory = async () => {
       try {
-        const response = await axios.get("http://localhost:3030/tasks/all");
-        const submittedTasks = response.data.filter(task => task.submission);
-        setTasks(submittedTasks);
+        const userId = sessionStorage.getItem("userId");
+        const token = sessionStorage.getItem("token");
+        if (!userId || !token) {
+          navigate("/SignIn");
+          return;
+        }
+
+        const response = await axios.get(
+          `http://localhost:3030/tasks/freelancer/${userId}/completed`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setTasks(response.data);
         setLoading(false);
       } catch (err) {
-        setError(err.response?.data?.message || "Failed to fetch submitted tasks");
-        console.error("Error fetching tasks:", err);
+        setError(err.response?.data?.message || "Failed to fetch work history");
+        console.error("Error fetching work history:", err);
         setLoading(false);
       }
     };
 
-    fetchSubmittedTasks();
-  }, []);
+    fetchWorkHistory();
+  }, [navigate]);
 
-  // Navigation handler
-  const handleBackToDash = () => {
-    navigate("/FreelancerDash"); // Adjust route if your dashboard is different
-  };
-
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <div className="spinner"></div>
-        <p>Loading...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="error-container">
-        <h2>Error</h2>
-        <p className="error-message">{error}</p>
-      </div>
-    );
-  }
+  if (loading) return (
+    <div className="loading-container">
+      <div className="spinner"></div>
+      <p>Loading...</p>
+    </div>
+  );
+  if (error) return (
+    <div className="error-container">
+      <h2>Error</h2>
+      <p className="error-message">{error}</p>
+    </div>
+  );
 
   return (
-    <div className="submitted-works-page">
+    <div className="work-history-page">
       <NavBar />
       <div className="container">
         <header className="header">
-          <h2>Submitted Tasks Overview</h2>
+          <h2>Your Completed Work History</h2>
         </header>
 
         {tasks.length === 0 ? (
-          <p className="no-tasks">No submitted tasks found.</p>
+          <p className="no-tasks">No completed tasks found.</p>
         ) : (
           <ul className="task-list">
             {tasks.map((task) => (
@@ -67,37 +67,38 @@ const ViewSubmittedWorks = () => {
                 <div className="task-details">
                   <p><strong>Task ID:</strong> {task._id}</p>
                   <p><strong>Description:</strong> {task.description}</p>
+                  <p><strong>Client Name:</strong> {task.ClientId?.username || "N/A"}</p>
                   <p><strong>Category:</strong> {task.category}</p>
                   <p><strong>Deadline:</strong> {new Date(task.deadline).toLocaleDateString()}</p>
-                  <p><strong>Client Name:</strong> {task.ClientId?.username || "N/A"}</p>
-                  <p><strong>Freelancer:</strong> {task.freelancerId?.username || "N/A"}</p>
                   <p><strong>Total Budget:</strong> ${task.budget}</p>
-                  <p><strong>Payment Status:</strong> {task.paymentStatus || "pending"}</p>
-                  <p><strong>Half Paid At:</strong> {task.halfPaidAt ? new Date(task.halfPaidAt).toLocaleString() : "N/A"}</p>
-                  <p><strong>Fully Paid At:</strong> {task.fullyPaidAt ? new Date(task.fullyPaidAt).toLocaleString() : "N/A"}</p>
-                  <p><strong>Submission Link:</strong> 
-                  
-                    <a href={task.submission} target="_blank" rel="noopener noreferrer">
-                      View Submission
-                    </a>
+                  <p><strong>Half Payment:</strong> 
+                    {task.halfPaidAt
+                      ? `$${task.budget / 2} (${new Date(task.halfPaidAt).toLocaleDateString()})`
+                      : "Pending"}
                   </p>
+                  <p><strong>Full Payment:</strong> 
+                    {task.fullyPaidAt
+                      ? `$${task.budget / 2} (${new Date(task.fullyPaidAt).toLocaleDateString()})`
+                      : "Pending"}
+                  </p>
+                  <p><strong>Platform Charges:</strong> 
+                    ${(task.halfPaymentPlatformCharge + task.fullPaymentPlatformCharge).toFixed(2)}
+                  </p>
+                  <p><strong>Payment Status:</strong> {task.paymentStatus}</p>
+                  <p><strong>Submission Date:</strong> 
+                    {task.submission ? new Date(task.submissionDate).toLocaleDateString() : "N/A"}
+                  </p>
+                  <p><strong>Rating:</strong> {task.rating ? `${task.rating}/5` : "Not Rated"}</p>
                 </div>
               </li>
             ))}
           </ul>
         )}
-
-        {/* Back to Dashboard Button */}
-        <section className="navigation-section">
-          <button className="back-to-dash-btn" onClick={handleBackToDash}>
-            Back to Dashboard
-          </button>
-        </section>
       </div>
 
       {/* Professional and Attractive CSS */}
       <style jsx>{`
-        .submitted-works-page {
+        .work-history-page {
           background: #f4f7fc;
           min-height: 100vh;
           font-family: 'Arial', sans-serif;
@@ -117,7 +118,7 @@ const ViewSubmittedWorks = () => {
         .header h2 {
           font-size: 2.2rem;
           font-weight: 700;
-          color: #1a3c66; /* Blue theme for a neutral overview */
+          color: #2e7d32; /* Green theme for freelancers */
           margin: 0;
         }
 
@@ -133,7 +134,7 @@ const ViewSubmittedWorks = () => {
         .spinner {
           width: 40px;
           height: 40px;
-          border: 4px solid #1a3c66;
+          border: 4px solid #2e7d32;
           border-top: 4px solid transparent;
           border-radius: 50%;
           animation: spin 1s linear infinite;
@@ -209,42 +210,8 @@ const ViewSubmittedWorks = () => {
         }
 
         .task-details strong {
-          color: #1a3c66;
+          color: #2e7d32;
           font-weight: 600;
-        }
-
-        .task-details a {
-          color: #007bff;
-          text-decoration: none;
-          transition: color 0.3s ease;
-        }
-
-        .task-details a:hover {
-          color: #0056b3;
-          text-decoration: underline;
-        }
-
-        /* Navigation Section */
-        .navigation-section {
-          display: flex;
-          justify-content: center;
-          margin-top: 40px;
-        }
-
-        .back-to-dash-btn {
-          padding: 10px 20px;
-          font-size: 1.1rem;
-          font-weight: 600;
-          color: #fff;
-          background: linear-gradient(90deg, #28a745, #20c997); /* Green gradient */
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-          transition: background 0.3s ease;
-        }
-
-        .back-to-dash-btn:hover {
-          background: linear-gradient(90deg, #1e7e34, #17a078);
         }
 
         @media (max-width: 768px) {
@@ -263,14 +230,10 @@ const ViewSubmittedWorks = () => {
           .task-details p {
             font-size: 0.95rem;
           }
-
-          .back-to-dash-btn {
-            width: 100%;
-          }
         }
       `}</style>
     </div>
   );
 };
 
-export default ViewSubmittedWorks;
+export default FreelancerWorkHistory;
