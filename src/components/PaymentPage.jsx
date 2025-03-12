@@ -11,7 +11,7 @@ const PaymentPage = () => {
   const [cardDetails, setCardDetails] = useState({ cardNumber: "", expiry: "", cvv: "" });
   const navigate = useNavigate();
   const location = useLocation();
-  const rating = location.state?.rating; // Get rating from navigation state
+  const rating = location.state?.rating;
 
   useEffect(() => {
     const fetchTaskDetails = async () => {
@@ -48,12 +48,21 @@ const PaymentPage = () => {
     try {
       const token = sessionStorage.getItem("token");
       const endpoint = task.paymentStatus === "pending" ? `/tasks/half-payment/${taskId}` : `/tasks/full-payment/${taskId}`;
-      const payload = task.paymentStatus === "pending" ? {} : { rating }; // Include rating for final payment
+      const payload = task.paymentStatus === "pending" ? {} : { rating };
+
+      console.log("Payment Method:", method);
+      console.log("Endpoint:", endpoint);
+      console.log("Payload:", payload);
+      console.log("Task Status Before Payment:", task.paymentStatus);
+      console.log("Task Submission:", task.submission);
+
       const response = await axios.put(
         `http://localhost:3030${endpoint}`,
         payload,
         { headers: { Authorization: `Bearer ${token}` } }
       );
+
+      console.log("Payment Response:", response.data); // Added log
 
       setTask({
         ...task,
@@ -61,12 +70,17 @@ const PaymentPage = () => {
         [task.paymentStatus === "pending" ? "halfPaidAt" : "fullyPaidAt"]: new Date(),
         ...(task.paymentStatus !== "pending" && { rating }),
       });
-      alert(`Payment simulated successfully via ${method}! ${response.data.message}`);
-      navigate("/confirmed-tasks");
+      alert(`Payment successful via ${method}! ${response.data.message}`);
+      
+      navigate("/ConfirmedTasks", { state: { refreshDash: true } });
     } catch (error) {
-      console.error("Error simulating payment:", error);
-      alert("Payment simulation failed: " + (error.response?.data?.message || error.message));
+      console.error("Payment Error:", error.response?.data || error);
+      alert("Payment failed: " + (error.response?.data?.message || error.message));
     }
+  };
+
+  const handleBackToDash = () => {
+    navigate("/FreelancerDash", { state: { refreshDash: true } });
   };
 
   if (loading) return <div className="text-center mt-5">Loading...</div>;
@@ -77,7 +91,9 @@ const PaymentPage = () => {
     </div>
   );
 
-  const paymentAmount = task.paymentStatus === "pending" ? task.budget / 2 : task.budget / 2;
+  const basePaymentAmount = task.paymentStatus === "pending" ? task.budget / 2 : task.budget / 2;
+  const platformCharge = basePaymentAmount * 0.05;
+  const totalPaymentAmount = basePaymentAmount + platformCharge;
 
   return (
     <div>
@@ -89,7 +105,9 @@ const PaymentPage = () => {
           <p><strong>Description:</strong> {task.description}</p>
           <p><strong>Freelancer:</strong> {task.freelancerId?.username || "N/A"}</p>
           <p><strong>Total Budget:</strong> ${task.budget}</p>
-          <p><strong>Amount to Pay:</strong> ${paymentAmount} ({task.paymentStatus === "pending" ? "Half Payment" : "Final Payment"})</p>
+          <p><strong>Base Payment:</strong> ${basePaymentAmount.toFixed(2)} ({task.paymentStatus === "pending" ? "Half Payment" : "Final Payment"})</p>
+          <p><strong>Platform Charge (5%):</strong> ${platformCharge.toFixed(2)}</p>
+          <p><strong>Total Amount to Pay:</strong> ${totalPaymentAmount.toFixed(2)}</p>
           <p><strong>Payment Status:</strong> {task.paymentStatus || "pending"}</p>
           {task.paymentStatus !== "pending" && rating && (
             <p><strong>Rating:</strong> {rating} / 5</p>
@@ -101,7 +119,7 @@ const PaymentPage = () => {
 
           <div className="mb-4">
             <h5>Pay with Google Pay</h5>
-            <p>Scan this dummy QR code (simulation only):</p>
+            <p>Scan this dummy QR code :</p>
             <img
               src="https://www.qrcode-monkey.com/img/default-preview-qr.svg"
               alt="Google Pay QR Code"
@@ -170,6 +188,15 @@ const PaymentPage = () => {
                 Simulate Card Payment
               </button>
             </form>
+          </div>
+
+          <div className="mt-4">
+            <button
+              className="btn btn-secondary w-100"
+              onClick={handleBackToDash}
+            >
+              Back to Dashboard
+            </button>
           </div>
         </div>
       </div>

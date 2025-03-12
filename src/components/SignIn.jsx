@@ -22,7 +22,7 @@ const SignIn = () => {
     axios
       .post("http://localhost:3030/signin", userCredentials)
       .then((response) => {
-        console.log("Sign-in response:", response.data); // Debug response
+        console.log("Sign-in response:", response.data);
         if (response.data.status === "success") {
           sessionStorage.setItem("token", response.data.token);
           sessionStorage.setItem("userId", response.data.userId);
@@ -48,46 +48,145 @@ const SignIn = () => {
   };
 
   return (
-    <div>
+    <div className="signin-page">
       <NavBar />
-      <div className="container d-flex justify-content-center align-items-center min-vh-100">
-        <div className="row w-50">
-          <h1 className="text-center mb-4">SIGN IN</h1>
-          <div className="col-12">
-            <div className="row g-3">
-              <div className="col-12">
-                <label htmlFor="emailid" className="form-label">
-                  Email
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="emailid"
-                  value={signinData.emailid}
-                  onChange={inputHandler}
-                />
-              </div>
-              <div className="col-12">
-                <label htmlFor="password" className="form-label">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  className="form-control"
-                  name="password"
-                  value={signinData.password}
-                  onChange={inputHandler}
-                />
-              </div>
-              <div className="col-12 text-center">
-                <button className="btn btn-success" onClick={handleSignIn}>
-                  Sign In
-                </button>
-              </div>
-            </div>
+      <div className="signin-container">
+        <div className="signin-card">
+          <h1>Sign In</h1>
+          <div className="form-group">
+            <label htmlFor="emailid">Email</label>
+            <input
+              type="text"
+              name="emailid"
+              value={signinData.emailid}
+              onChange={inputHandler}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={signinData.password}
+              onChange={inputHandler}
+            />
+          </div>
+          <div className="button-group">
+            <button onClick={handleSignIn}>Sign In</button>
           </div>
         </div>
       </div>
+
+      {/* Professional and Attractive CSS */}
+      <style jsx>{`
+        .signin-page {
+          background: linear-gradient(135deg, #e6f0fa, #f4f7fc);
+          min-height: 100vh;
+          font-family: 'Arial', sans-serif;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .signin-container {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 20px;
+        }
+
+        .signin-card {
+          background: #fff;
+          border-radius: 15px;
+          padding: 40px;
+          width: 100%;
+          max-width: 450px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+          text-align: center;
+          transition: transform 0.3s ease;
+        }
+
+        .signin-card:hover {
+          transform: translateY(-5px);
+        }
+
+        .signin-card h1 {
+          font-size: 2rem;
+          font-weight: 700;
+          color: #1a3c66;
+          margin-bottom: 30px;
+        }
+
+        .form-group {
+          margin-bottom: 20px;
+          text-align: left;
+        }
+
+        .form-group label {
+          display: block;
+          font-size: 1.1rem;
+          color: #333;
+          margin-bottom: 8px;
+          font-weight: 500;
+        }
+
+        .form-group input {
+          width: 100%;
+          padding: 12px 15px;
+          font-size: 1rem;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          outline: none;
+          transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group input:focus {
+          border-color: #007bff;
+          box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+        }
+
+        .button-group {
+          margin-top: 30px;
+        }
+
+        .button-group button {
+          background: #007bff;
+          color: #fff;
+          padding: 12px 30px;
+          border: none;
+          border-radius: 8px;
+          font-size: 1.1rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .button-group button:hover {
+          background: #0056b3;
+          transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+          .signin-card {
+            padding: 30px;
+            max-width: 100%;
+          }
+
+          .signin-card h1 {
+            font-size: 1.8rem;
+          }
+
+          .form-group input {
+            padding: 10px 12px;
+            font-size: 0.95rem;
+          }
+
+          .button-group button {
+            padding: 10px 25px;
+            font-size: 1rem;
+          }
+        }
+      `}</style>
     </div>
   );
 };

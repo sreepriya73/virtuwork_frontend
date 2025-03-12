@@ -8,13 +8,13 @@ const UserRegister = () => {
     emailid: "",
     password: "",
     phone: "",
-    role: "user", // Default role
+    role: "user",
     dob: "",
     gender: "",
     address: "",
     district: "",
     state: "",
-    country: "",
+    country: "India", // Added default country
     qualification: "",
     bio: "",
   });
@@ -25,9 +25,6 @@ const UserRegister = () => {
     "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal",
   ];
 
- 
-
-  // Map state to corresponding district (city) options.
   const districtMapping = {
     Kerala: [
       "Trivandrum", "Kollam", "Pathanamthitta", "Alappuzha", "Kottayam", "Idukki", "Ernakulam", "Thrissur", "Palakkad", "Malappuram", "Kozhikode", "Wayanad", "Kannur", "Kasaragod"
@@ -36,65 +33,63 @@ const UserRegister = () => {
       "Bengaluru", "Mysuru", "Mangalore", "Hubli-Dharwad", "Belgaum", "Gulbarga", "Davangere"
     ],
     AndhraPradesh: [
-    "Anantapur", "Chittoor", "East Godavari", "Guntur", "Krishna", "Kurnool", "Nellore", "Prakasam", "Srikakulam", "Visakhapatnam", "Vizianagaram", "West Godavari", "YSR Kadapa"
-  ],
+      "Anantapur", "Chittoor", "East Godavari", "Guntur", "Krishna", "Kurnool", "Nellore", "Prakasam", "Srikakulam", "Visakhapatnam", "Vizianagaram", "West Godavari", "YSR Kadapa"
+    ],
     ArunachalPradesh: [
-    "Tawang", "West Kameng", "East Kameng", "Papum Pare", "Kurung Kumey", "Kra Daadi", "Lower Subansiri", "Upper Subansiri", "West Siang", "East Siang", "Siang", "Upper Siang", "Lower Siang", "Lower Dibang Valley", "Dibang Valley", "Anjaw", "Lohit", "Namsai", "Changlang", "Tirap", "Longding"
-  ],
-  Assam: [
-    "Baksa", "Barpeta", "Biswanath", "Bongaigaon", "Cachar", "Charaideo", "Chirang", "Darrang", "Dhemaji", "Dhubri", "Dibrugarh", "Goalpara", "Golaghat", "Hailakandi", "Hojai", "Jorhat", "Kamrup Metropolitan", "Kamrup", "Karbi Anglong", "Karimganj", "Kokrajhar", "Lakhimpur", "Majuli", "Morigaon", "Nagaon", "Nalbari", "Sivasagar", "Sonitpur", "South Salmara-Mankachar", "Tinsukia", "Udalguri", "West Karbi Anglong"
-  ],
-  Bihar: [
-    "Araria", "Arwal", "Aurangabad", "Banka", "Begusarai", "Bhagalpur", "Bhojpur", "Buxar", "Darbhanga", "East Champaran", "Gaya", "Gopalganj", "Jamui", "Jehanabad", "Khagaria", "Kishanganj", "Lakhisarai", "Madhepura", "Madhubani", "Munger", "Muzaffarpur", "Nalanda", "Nawada", "Patna", "Purnia", "Rohtas", "Saharsa", "Samastipur", "Saran", "Sheikhpura", "Sheohar", "Sitamarhi", "Siwan", "Supaul"
-  ],
-  Chhattisgarh: [
-    "Balod", "Baloda Bazar", "Bastar", "Bemetara", "Bijapur", "Bilaspur", "Dantewada", "Dhamtari", "Durg", "Jashpur", "Janjgir-Champa", "Korba", "Koriya", "Mahasamund", "Narayanpur", "Raigarh", "Raipur", "Rajnandgaon", "Surajpur"
-  ],
-  Goa: [
-    "North Goa", "South Goa"
-  ],
-  Gujarat: [
-    "Ahmedabad", "Amreli", "Anand", "Banaskantha", "Bharuch", "Bhavnagar", "Botad", "Chhota Udepur", "Dahod", "Dangs", "Devbhoomi Dwarka", "Gandhinagar", "Jamnagar", "Junagadh", "Kheda", "Kutch", "Mahisagar", "Mehsana", "Morbi", "Narmada", "Navsari", "Panchmahal", "Patan", "Porbandar", "Rajkot", "Sabarkantha", "Surat", "Surendranagar", "Tapi", "Vadodara", "Valsad"
-  ],
-  Haryana: [
-    "Ambala", "Bhiwani", "Charkhi Dadri", "Faridabad", "Fatehabad", "Gurgaon", "Hisar", "Jhajjar", "Jind", "Kaithal", "Karnal", "Kurukshetra", "Mahendragarh", "Mewat", "Palwal", "Panipat", "Rewari", "Rohtak", "Sirsa", "Sonipat", "Yamunanagar"
-  ],
-  HimachalPradesh: [
-    "Bilaspur", "Chamba", "Hamirpur", "Kangra", "Kullu", "Lahaul-Spiti", "Mandi", "Shimla", "Sirmaur", "Solan", "Una"
-  ],
-  Jharkhand: [
-    "Bokaro", "Chatra", "Deoghar", "Dhanbad", "Dumka", "East Singhbhum", "Garhwa", "Giridih", "Godda", "Gumla", "Hazaribagh", "Jamtara", "Khunti", "Koderma", "Latehar", "Lohardaga", "Pakur", "Palamu", "Ramgarh", "Ranchi", "Sahibganj", "Seraikela-Kharsawan", "Simdega", "West Singhbhum"
-  ],
-  MadhyaPradesh: [
-    "Agar Malwa", "Alirajpur", "Anuppur", "Ashoknagar", "Balaghat", "Barwani", "Betul", "Bhind", "Bhopal", "Burhanpur", "Chhatarpur", "Chhindwara", "Damoh", "Datia", "Dewas", "Dhar", "Dindori", "Guna", "Gwalior", "Harda", "Indore", "Jabalpur", "Jhabua", "Katni", "Khandwa", "Khargone", "Mandla", "Mandsaur", "Morena", "Narsinghpur", "Neemuch", "Panna", "Rewa", "Rajgarh", "Ratlam", "Raisen", "Satna", "Sehore", "Seoni", "Shahdol", "Shajapur", "Sheopur", "Shivpuri", "Sidhi", "Singrauli", "Tikamgarh", "Ujjain", "Umaria", "Vidisha"
-  ],
-  Maharashtra: [
-    "Ahmednagar", "Akola", "Amravati", "Aurangabad", "Beed", "Bhandara", "Buldhana", "Chandrapur", "Dhule", "Gadchiroli", "Gondia", "Hingoli", "Jalgaon", "Jalna", "Kolhapur", "Latur", "Mumbai City", "Mumbai Suburban", "Nagpur", "Nanded", "Nandurbar", "Nashik", "Osmanabad", "Parbhani", "Pune", "Raigad", "Ratnagiri", "Sangli", "Satara", "Sindhudurg", "Solapur", "Thane", "Wardha", "Washim", "Yavatmal"
-  ],
-  Manipur: [
-    "Bishnupur", "Churachandpur", "Imphal East", "Imphal West", "Senapati", "Tamenglong", "Thoubal", "Ukhrul"
-  ],
-  Meghalaya: [
-    "East Garo Hills", "East Khasi Hills", "Jaintia Hills", "Ri Bhoi", "South Garo Hills", "West Garo Hills", "West Khasi Hills"
-  ],
-  Mizoram: [
-    "Aizawl", "Champhai", "Kolasib", "Lawngtlai", "Lunglei", "Mamit"
-  ],
-  Nagaland: [
-    "Dimapur", "Kohima", "Mokokchung", "Mon", "Phek", "Tuensang", "Wokha", "Zunheboto"
-  ],
-  Odisha: [
-    "Angul", "Balangir", "Balasore", "Bargarh", "Bhadrak", "Boudh", "Cuttack", "Debagarh",
-     "Dhenkanal", "Gajapati", "Ganjam", "Jagatsinghpur", "Jajpur", "Jharsuguda", "Kalahandi",
-      "Kandhamal", "Kendrapara", "Kendujhar", "Malkangiri", "Mayurbhanj", "Nuapada", "Puri", 
-      "Rayagada", "Sambalpur", "Subarnapur", "Sundargarh"  ],
-
-    
+      "Tawang", "West Kameng", "East Kameng", "Papum Pare", "Kurung Kumey", "Kra Daadi", "Lower Subansiri", "Upper Subansiri", "West Siang", "East Siang", "Siang", "Upper Siang", "Lower Siang", "Lower Dibang Valley", "Dibang Valley", "Anjaw", "Lohit", "Namsai", "Changlang", "Tirap", "Longding"
+    ],
+    Assam: [
+      "Baksa", "Barpeta", "Biswanath", "Bongaigaon", "Cachar", "Charaideo", "Chirang", "Darrang", "Dhemaji", "Dhubri", "Dibrugarh", "Goalpara", "Golaghat", "Hailakandi", "Hojai", "Jorhat", "Kamrup Metropolitan", "Kamrup", "Karbi Anglong", "Karimganj", "Kokrajhar", "Lakhimpur", "Majuli", "Morigaon", "Nagaon", "Nalbari", "Sivasagar", "Sonitpur", "South Salmara-Mankachar", "Tinsukia", "Udalguri", "West Karbi Anglong"
+    ],
+    Bihar: [
+      "Araria", "Arwal", "Aurangabad", "Banka", "Begusarai", "Bhagalpur", "Bhojpur", "Buxar", "Darbhanga", "East Champaran", "Gaya", "Gopalganj", "Jamui", "Jehanabad", "Khagaria", "Kishanganj", "Lakhisarai", "Madhepura", "Madhubani", "Munger", "Muzaffarpur", "Nalanda", "Nawada", "Patna", "Purnia", "Rohtas", "Saharsa", "Samastipur", "Saran", "Sheikhpura", "Sheohar", "Sitamarhi", "Siwan", "Supaul"
+    ],
+    Chhattisgarh: [
+      "Balod", "Baloda Bazar", "Bastar", "Bemetara", "Bijapur", "Bilaspur", "Dantewada", "Dhamtari", "Durg", "Jashpur", "Janjgir-Champa", "Korba", "Koriya", "Mahasamund", "Narayanpur", "Raigarh", "Raipur", "Rajnandgaon", "Surajpur"
+    ],
+    Goa: [
+      "North Goa", "South Goa"
+    ],
+    Gujarat: [
+      "Ahmedabad", "Amreli", "Anand", "Banaskantha", "Bharuch", "Bhavnagar", "Botad", "Chhota Udepur", "Dahod", "Dangs", "Devbhoomi Dwarka", "Gandhinagar", "Jamnagar", "Junagadh", "Kheda", "Kutch", "Mahisagar", "Mehsana", "Morbi", "Narmada", "Navsari", "Panchmahal", "Patan", "Porbandar", "Rajkot", "Sabarkantha", "Surat", "Surendranagar", "Tapi", "Vadodara", "Valsad"
+    ],
+    Haryana: [
+      "Ambala", "Bhiwani", "Charkhi Dadri", "Faridabad", "Fatehabad", "Gurgaon", "Hisar", "Jhajjar", "Jind", "Kaithal", "Karnal", "Kurukshetra", "Mahendragarh", "Mewat", "Palwal", "Panipat", "Rewari", "Rohtak", "Sirsa", "Sonipat", "Yamunanagar"
+    ],
+    HimachalPradesh: [
+      "Bilaspur", "Chamba", "Hamirpur", "Kangra", "Kullu", "Lahaul-Spiti", "Mandi", "Shimla", "Sirmaur", "Solan", "Una"
+    ],
+    Jharkhand: [
+      "Bokaro", "Chatra", "Deoghar", "Dhanbad", "Dumka", "East Singhbhum", "Garhwa", "Giridih", "Godda", "Gumla", "Hazaribagh", "Jamtara", "Khunti", "Koderma", "Latehar", "Lohardaga", "Pakur", "Palamu", "Ramgarh", "Ranchi", "Sahibganj", "Seraikela-Kharsawan", "Simdega", "West Singhbhum"
+    ],
+    MadhyaPradesh: [
+      "Agar Malwa", "Alirajpur", "Anuppur", "Ashoknagar", "Balaghat", "Barwani", "Betul", "Bhind", "Bhopal", "Burhanpur", "Chhatarpur", "Chhindwara", "Damoh", "Datia", "Dewas", "Dhar", "Dindori", "Guna", "Gwalior", "Harda", "Indore", "Jabalpur", "Jhabua", "Katni", "Khandwa", "Khargone", "Mandla", "Mandsaur", "Morena", "Narsinghpur", "Neemuch", "Panna", "Rewa", "Rajgarh", "Ratlam", "Raisen", "Satna", "Sehore", "Seoni", "Shahdol", "Shajapur", "Sheopur", "Shivpuri", "Sidhi", "Singrauli", "Tikamgarh", "Ujjain", "Umaria", "Vidisha"
+    ],
+    Maharashtra: [
+      "Ahmednagar", "Akola", "Amravati", "Aurangabad", "Beed", "Bhandara", "Buldhana", "Chandrapur", "Dhule", "Gadchiroli", "Gondia", "Hingoli", "Jalgaon", "Jalna", "Kolhapur", "Latur", "Mumbai City", "Mumbai Suburban", "Nagpur", "Nanded", "Nandurbar", "Nashik", "Osmanabad", "Parbhani", "Pune", "Raigad", "Ratnagiri", "Sangli", "Satara", "Sindhudurg", "Solapur", "Thane", "Wardha", "Washim", "Yavatmal"
+    ],
+    Manipur: [
+      "Bishnupur", "Churachandpur", "Imphal East", "Imphal West", "Senapati", "Tamenglong", "Thoubal", "Ukhrul"
+    ],
+    Meghalaya: [
+      "East Garo Hills", "East Khasi Hills", "Jaintia Hills", "Ri Bhoi", "South Garo Hills", "West Garo Hills", "West Khasi Hills"
+    ],
+    Mizoram: [
+      "Aizawl", "Champhai", "Kolasib", "Lawngtlai", "Lunglei", "Mamit"
+    ],
+    Nagaland: [
+      "Dimapur", "Kohima", "Mokokchung", "Mon", "Phek", "Tuensang", "Wokha", "Zunheboto"
+    ],
+    Odisha: [
+      "Angul", "Balangir", "Balasore", "Bargarh", "Bhadrak", "Boudh", "Cuttack", "Debagarh",
+      "Dhenkanal", "Gajapati", "Ganjam", "Jagatsinghpur", "Jajpur", "Jharsuguda", "Kalahandi",
+      "Kandhamal", "Kendrapara", "Kendujhar", "Malkangiri", "Mayurbhanj", "Nuapada", "Puri",
+      "Rayagada", "Sambalpur", "Subarnapur", "Sundargarh"
+    ],
   };
 
   const inputHandler = (event) => {
     const { name, value } = event.target;
-    // When state changes, reset district
     if (name === "state") {
       setData({ ...data, state: value, district: "" });
     } else {
@@ -102,35 +97,111 @@ const UserRegister = () => {
     }
   };
 
-  const validateFields = () => {
+  const validateFields = async () => {
     const errors = {};
 
-    if (!data.username) errors.username = "Username is required.";
+    // Username validation
+    if (!data.username) {
+      errors.username = "Username is required";
+    } else if (data.username.length < 3 || data.username.length > 20) {
+      errors.username = "Username must be between 3 and 20 characters";
+    } else if (!/^[a-zA-Z0-9_]+$/.test(data.username)) {
+      errors.username = "Username can only contain letters, numbers, and underscores";
+    }
+
+    // Email validation
     if (!data.emailid) {
-      errors.emailid = "Email ID is required.";
+      errors.emailid = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.emailid)) {
+      errors.emailid = "Invalid email format";
     } else {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(data.emailid)) {
-        errors.emailid = "Invalid email format.";
+      try {
+        const response = await axios.post("http://localhost:3030/check-email", { emailid: data.emailid });
+        if (response.data.exists) {
+          errors.emailid = "Email already registered";
+        }
+      } catch (error) {
+        errors.emailid = "Error checking email availability";
       }
     }
-    if (!data.password) errors.password = "Password is required.";
-    if (!data.phone) errors.phone = "Phone number is required.";
-    if (!data.role) errors.role = "Role is required.";
-    if (!data.dob) errors.dob = "Date of birth is required.";
-    if (!data.gender) errors.gender = "Gender is required.";
-    if (!data.address) errors.address = "Address is required.";
-    if (!data.district) errors.district = "District is required.";
-    if (!data.state) errors.state = "State is required.";
-   
-    if (!data.qualification) errors.qualification = "Qualification is required.";
-    if (!data.bio) errors.bio = "Short bio is required.";
 
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{5,}$/;
+    // Password validation
     if (!data.password) {
-      errors.password = "Password is required.";
-    } else if (!passwordRegex.test(data.password)) {
-      errors.password = "Password must be 5+ characters with an uppercase, lowercase, number, and special character.";
+      errors.password = "Password is required";
+    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/.test(data.password)) {
+      errors.password = "Password must be 8+ characters with uppercase, lowercase, number, and special character";
+    }
+
+    // Phone validation
+    if (!data.phone) {
+      errors.phone = "Phone number is required";
+    } else if (!/^\d{10}$/.test(data.phone)) {
+      errors.phone = "Phone number must be exactly 10 digits";
+    } else {
+      try {
+        const response = await axios.post("http://localhost:3030/check-phone", { phone: data.phone });
+        if (response.data.exists) {
+          errors.phone = "Phone number already registered";
+        }
+      } catch (error) {
+        errors.phone = "Error checking phone availability";
+      }
+    }
+
+    // Role validation
+    if (!data.role || !["Client", "Freelancer"].includes(data.role)) {
+      errors.role = "Please select a valid role";
+    }
+
+    // DOB validation
+    if (!data.dob) {
+      errors.dob = "Date of birth is required";
+    } else {
+      const dob = new Date(data.dob);
+      const today = new Date();
+      const age = today.getFullYear() - dob.getFullYear();
+      if (age < 18 || age > 100) {
+        errors.dob = "You must be between 18 and 100 years old";
+      }
+    }
+
+    // Gender validation
+    if (!data.gender) {
+      errors.gender = "Gender is required";
+    }
+
+    // Address validation
+    if (!data.address) {
+      errors.address = "Address is required";
+    } else if (data.address.length < 10) {
+      errors.address = "Address must be at least 10 characters";
+    }
+
+    // State and District validation
+    if (!data.state) {
+      errors.state = "State is required";
+    }
+    if (!data.district) {
+      errors.district = "District is required";
+    }
+
+    // Country validation (assuming it's India for now)
+    if (!data.country) {
+      errors.country = "Country is required";
+    }
+
+    // Qualification validation
+    if (!data.qualification) {
+      errors.qualification = "Qualification is required";
+    } else if (data.qualification.length < 2) {
+      errors.qualification = "Qualification must be at least 2 characters";
+    }
+
+    // Bio validation
+    if (!data.bio) {
+      errors.bio = "Bio is required";
+    } else if (data.bio.length < 10 || data.bio.length > 500) {
+      errors.bio = "Bio must be between 10 and 500 characters";
     }
 
     return errors;
@@ -139,7 +210,7 @@ const UserRegister = () => {
   const submitForm = async (event) => {
     event.preventDefault();
 
-    const validationErrors = validateFields();
+    const validationErrors = await validateFields();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
@@ -165,7 +236,7 @@ const UserRegister = () => {
           address: "",
           district: "",
           state: "",
-         
+          country: "India",
           qualification: "",
           bio: "",
         });
@@ -175,7 +246,7 @@ const UserRegister = () => {
       }
     } catch (error) {
       console.error("Error during registration:", error);
-      alert("An error occurred during registration.");
+      alert("An error occurred during registration: " + (error.response?.data?.message || error.message));
     }
   };
 
@@ -221,7 +292,6 @@ const UserRegister = () => {
                 <option value="">Select Role</option>
                 <option value="Client">client</option>
                 <option value="Freelancer">freelancer</option>
-                
               </select>
               {errors.role && <small className="text-danger">{errors.role}</small>}
             </div>
@@ -252,7 +322,7 @@ const UserRegister = () => {
               {errors.address && <small className="text-danger">{errors.address}</small>}
             </div>
 
-            {/* District (Dynamic based on selected state) */}
+            {/* District */}
             <div className="col-md-6">
               <label>District</label>
               <select className="form-control" name="district" value={data.district} onChange={inputHandler}>
@@ -279,8 +349,6 @@ const UserRegister = () => {
               </select>
               {errors.state && <small className="text-danger">{errors.state}</small>}
             </div>
-
-           
 
             {/* Qualification */}
             <div className="col-md-6">
